@@ -8,16 +8,11 @@
 body {
   body {
   margin: 0;
-  background: linear-gradient(to right, #ff9a9e, #fecfef);
+  background: pink;
   font-family: 'Segoe UI', sans-serif;
   color: white;
   text-align: center;
   overflow: hidden;
-}
-  .flower {
-  position: absolute;
-  font-size: 20px;
-  animation: fall linear infinite;
 }
 
 /* PASSWORD SCREEN */
@@ -51,8 +46,9 @@ button {
 #main {
   display: none;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  z-index: 2;
+  text-align: center;
+  padding-top: 100px;
 }
 
 /* GLOW NAME */
@@ -78,7 +74,16 @@ button {
   0% { transform: translateY(-10vh); }
   100% { transform: translateY(110vh); }
 }
-
+/* FLOWERS */
+  .flower {
+  position: absolute;
+  font-size: 20px;
+  animation: fall linear infinite;
+}
+  @keyframes fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+    
 /* GIFT BOX */
 .gift {
   font-size: 60px;
@@ -106,6 +111,11 @@ button {
 <!-- MAIN -->
 <div id="main">
 
+h1 {
+  position: relative;
+  z-index: 3;
+}
+  
   <h1 class="glow">Eid Mubarak Ladooo ❤️</h1>
 
   <div class="gift" onclick="openGift()">🎁</div>
@@ -136,14 +146,34 @@ function checkPass() {
 const msg =
 `Eid Mubarak meri pyari Ladooo ❤️
 
-Main tumhara Duddy 💕
-Bas yeh kehna chahta hoon...
+Eid Mubarak my beautifulwife ❤️
 
-Tum meri life ki sab se beautiful feeling ho 🥺
-Door ho lekin dil ke sab se kareeb ho 💖
+It's me, your Duddy 💕
 
-Har Eid tumhare bina adhuri lagti hai...
-Kaash main tumhare saath hota 🫂
+On this special day, I just want to tell you...
+You are the most precious part of my life 🥺
+
+Even though we are far apart,
+you are always in my heart, in my thoughts, in everything I do 💖
+
+Every Eid feels incomplete without you...
+I wish I could hug you right now 🫂
+
+You are not just my love,
+you are my happiness, my peace, my everything 😍
+
+I miss you so much my Ladooo...
+And I promise, one day we will celebrate every Eid together ❤️
+
+Allah tumhe hamesha khush rakhe 🥺
+
+Miss you so much meri Ladooo 🫂
+
+Raat ko jab tum gyi thi mein nein
+is leya nhi roka cause mein is pey deehan dena chahta tha.
+
+baki all the best.
+pics or videos bana na mat bhulna..
 
 I Love You Forever meri Ladooo ❤️`;
 
@@ -173,6 +203,11 @@ function createFlower() {
   document.body.appendChild(f);
   setTimeout(()=>f.remove(),5000);
 }
+
+@keyframes explode {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: scale(2) rotate(360deg); opacity: 0; }
+}
   
 setInterval(createFlower,500);
 // HEARTS
@@ -182,6 +217,13 @@ function createHeart() {
   h.innerHTML = "❤️";
   h.style.left = Math.random() * 100 + "vw";
   h.style.animationDuration = (Math.random()*3+2)+"s";
+
+  // CLICK explosion effect
+  h.addEventListener("click", () => {
+    h.style.animation = "explode 0.5s forwards";
+    setTimeout(() => h.remove(), 500); // remove after animation
+  });
+
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),5000);
 }
