@@ -6,12 +6,18 @@
 
 <style>
 body {
+  body {
   margin: 0;
-  background: black;
+  background: linear-gradient(to right, #ff9a9e, #fecfef);
   font-family: 'Segoe UI', sans-serif;
   color: white;
   text-align: center;
   overflow: hidden;
+}
+  .flower {
+  position: absolute;
+  font-size: 20px;
+  animation: fall linear infinite;
 }
 
 /* PASSWORD SCREEN */
@@ -110,7 +116,7 @@ button {
 
 <!-- MUSIC -->
 <audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+  <source src="https://dl.sndup.net/wx9h/Tera%20Ban%20Jaunga.mp3" type="audio/mp3">
 </audio>
 
 <script>
@@ -130,7 +136,7 @@ function checkPass() {
 const msg =
 `Eid Mubarak meri pyari Ladooo ❤️
 
-Main tumhara Duddy (Abdul Raheem) 💕
+Main tumhara Duddy 💕
 Bas yeh kehna chahta hoon...
 
 Tum meri life ki sab se beautiful feeling ho 🥺
@@ -157,7 +163,18 @@ function typeText() {
     setTimeout(typeText, 40);
   }
 }
-
+  
+function createFlower() {
+  let f = document.createElement("div");
+  f.classList.add("flower");
+  f.innerHTML = "🌸";
+  f.style.left = Math.random() * 100 + "vw";
+  f.style.animationDuration = (Math.random()*4+3)+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),5000);
+}
+  
+setInterval(createFlower,500);
 // HEARTS
 function createHeart() {
   let h = document.createElement("div");
