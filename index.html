@@ -5,10 +5,10 @@
 <title>For Ladooo ❤️</title>
 
 <style>
+/* BODY */
 body {
-  body {
   margin: 0;
-  background: pink;
+  background: linear-gradient(to right, #ff9a9e, #fecfef);
   font-family: 'Segoe UI', sans-serif;
   color: white;
   text-align: center;
@@ -26,14 +26,16 @@ body {
   align-items: center;
   flex-direction: column;
   color: black;
-  z-index: 10;  /* HIGH priority */
+  z-index: 10;
 }
 
 input {
-  padding: 10px;
+  padding: 12px;
   border-radius: 20px;
   border: none;
   text-align: center;
+  margin-top: 10px;
+  outline: none;
 }
 
 button {
@@ -46,7 +48,7 @@ button {
 
 /* MAIN CONTENT */
 #main {
-  display: none;       /* initially hidden */
+  display: none;
   position: relative;
   z-index: 2;
   text-align: center;
@@ -68,36 +70,59 @@ button {
 
 /* HEARTS */
 .heart {
-  position: absolute;
+  position: fixed;
   color: red;
-  animation: fall linear infinite;
+  animation: fallHeart linear infinite;
+  font-size: 24px;
+  z-index: 0;
 }
 
-@keyframes fall {
-  0% { transform: translateY(-10vh); }
-  100% { transform: translateY(110vh); }
-}
 /* FLOWERS */
-  .flower {
-  position: absolute;
+.flower {
+  position: fixed;
   font-size: 20px;
-  animation: fall linear infinite;
+  animation: fallFlower linear infinite;
+  z-index: 0;
 }
-  @keyframes fall {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-    
-/* GIFT BOX */
+
+/* Heart fall animation */
+@keyframes fallHeart {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* Flower fall animation */
+@keyframes fallFlower {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* Gift box */
 .gift {
   font-size: 60px;
   cursor: pointer;
   margin-top: 20px;
+  position: relative;
+  z-index: 3;
 }
 
+/* Typing message */
 #message {
   margin-top: 20px;
   font-size: 22px;
   white-space: pre-line;
+}
+
+/* Explode animation */
+@keyframes explode {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: scale(2) rotate(360deg); opacity: 0; }
+}
+
+/* Glow for h1 */
+h1 {
+  position: relative;
+  z-index: 3;
 }
 </style>
 </head>
@@ -117,22 +142,6 @@ button {
   <div class="gift" onclick="openGift()">🎁</div>
   <div id="message"></div>
 </div>
-  
-<!-- MAIN -->
-<div id="main">
-
-h1 {
-  position: relative;
-  z-index: 3;
-}
-  
-  <h1 class="glow">Eid Mubarak Ladooo ❤️</h1>
-
-  <div class="gift" onclick="openGift()">🎁</div>
-
-  <div id="message"></div>
-
-</div>
 
 <!-- MUSIC -->
 <audio autoplay loop>
@@ -140,20 +149,19 @@ h1 {
 </audio>
 
 <script>
-
-// PASSWORD
+// PASSWORD CHECK
 function checkPass() {
   let p = document.getElementById("pass").value;
-  if (p === "ladoo") {                 // correct password
-    document.getElementById("lockScreen").style.display = "none"; // hide lock
-    document.getElementById("main").style.display = "block";      // show main content
+  if (p === "ladoo") {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("main").style.display = "block";
   } else {
     alert("Wrong Password 😜");
   }
 }
-// MESSAGE
-const msg =
-`Eid Mubarak meri pyari Ladooo ❤️
+
+// MESSAGE TEXT
+const msg = `Eid Mubarak meri pyari Ladooo ❤️
 
 Eid Mubarak my beautifulwife ❤️
 
@@ -194,7 +202,7 @@ function openGift() {
   typeText();
 }
 
-// TYPING
+// TYPING EFFECT
 function typeText() {
   if (i < msg.length) {
     document.getElementById("message").innerHTML += msg.charAt(i);
@@ -202,24 +210,8 @@ function typeText() {
     setTimeout(typeText, 40);
   }
 }
-  
-function createFlower() {
-  let f = document.createElement("div");
-  f.classList.add("flower");
-  f.innerHTML = "🌸";
-  f.style.left = Math.random() * 100 + "vw";
-  f.style.animationDuration = (Math.random()*4+3)+"s";
-  document.body.appendChild(f);
-  setTimeout(()=>f.remove(),5000);
-}
 
-@keyframes explode {
-  0% { transform: scale(1) rotate(0deg); opacity: 1; }
-  100% { transform: scale(2) rotate(360deg); opacity: 0; }
-}
-  
-setInterval(createFlower,500);
-// HEARTS
+// CREATE HEART
 function createHeart() {
   let h = document.createElement("div");
   h.classList.add("heart");
@@ -227,17 +219,28 @@ function createHeart() {
   h.style.left = Math.random() * 100 + "vw";
   h.style.animationDuration = (Math.random()*3+2)+"s";
 
-  // CLICK explosion effect
+  // CLICK explode
   h.addEventListener("click", () => {
     h.style.animation = "explode 0.5s forwards";
-    setTimeout(() => h.remove(), 500); // remove after animation
+    setTimeout(() => h.remove(), 500);
   });
 
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
+  setTimeout(() => h.remove(), 5000);
 }
-setInterval(createHeart,300);
+setInterval(createHeart, 300);
 
+// CREATE FLOWERS
+function createFlower() {
+  let f = document.createElement("div");
+  f.classList.add("flower");
+  f.innerHTML = "🌸";
+  f.style.left = Math.random() * 100 + "vw";
+  f.style.animationDuration = (Math.random()*4+3)+"s";
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 5000);
+}
+setInterval(createFlower, 500);
 </script>
 
 </body>
